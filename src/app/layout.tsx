@@ -1,5 +1,6 @@
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Icons, QueryField } from "@/components";
@@ -18,7 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="antialiased hydrated">
-      <body className={cn(inter.className, "text-foreground")}>
+      <body
+        className={cn(
+          inter.className,
+          "text-foreground scrollbar-thumb-gray scrollbar-thumb-rounded scrollbar-track-gray-lighter scrollbar-w-4 scrolling-touch"
+        )}
+      >
         <div className="relative min-h-screen isolate overflow-hidden border-b border-gray-200 bg-white">
           <svg
             className="absolute inset-0 -z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
@@ -59,8 +65,10 @@ export default function RootLayout({
               </p>
 
               <div className="flex flex-col w-full mx-auto max-w-2xl mt-16">
-                <QueryField />
-                {children}
+                <Suspense>
+                  <QueryField />
+                  {children}
+                </Suspense>
               </div>
             </div>
           </div>
